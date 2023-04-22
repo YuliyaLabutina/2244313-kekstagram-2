@@ -97,7 +97,7 @@ const createBigPhoto = (miniatures, description,likes,comments) => {
       });
       socialCommentsCount.firstChild.textContent = ` ${commentsCount.textContent} из  `;
       loaderButton.classList.add('hidden');
-    });
+    },{once:true});
 
   }
 
