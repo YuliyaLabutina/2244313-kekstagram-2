@@ -9,8 +9,6 @@ const start = document.querySelector('.img-upload__start input');
 const photoUser = document.querySelector('#upload-file');
 const body=document.querySelector('body');
 const form = document.querySelector('.img-upload__form');
-const description = form.querySelector('.text__description');
-const hashtags = form.querySelector('.text__hashtags');
 const submitButton = document.querySelector('#upload-submit');
 
 start.onchange = function () {
@@ -29,6 +27,10 @@ function closeWindow(){
   img.classList='';
   document.querySelector('.img-upload__preview').style.transform='scale(1)';
   document.querySelector('.scale__control--value').value = `${100}%`;
+  inputHashtags.value ='';
+  inputComments.value ='';
+  // eslint-disable-next-line no-return-assign
+  document.querySelectorAll('.pristine-error').forEach((e) => e.innerHTML  ='');
 }
 
 const cancel = document.querySelector('.img-upload__cancel');
@@ -89,7 +91,6 @@ const showErrorMessageModal = () =>{
     clonedErrorModal.remove();
   });
   document.body.append(clonedErrorModal);
-  //clonedErrorModal.style.position = 'absolute';
   clonedErrorModal.style.zIndex = '100';
   setTimeout(() => {
     clonedErrorModal.remove();
@@ -105,10 +106,10 @@ const pristine = new Pristine(form,{
 pristine.addValidator(document.querySelector('[name="hashtags"]'), hashtagsValid);
 //сообщения об ошибках хештегов
 const formValidateCheck = () => {
-  pristine.addValidator(hashtags, isEveryHashtagSymbolsValid, 'Хэш-тег должен начинается с символа # и состоять из букв или чисел, без пробелов и спецсимволов. Максимальная длина одного хэш-тега 20 символов, включая решётку');
-  pristine.addValidator(hashtags, areHashtagsUnique, 'Хэш-теги не должны повторяться');
-  pristine.addValidator(hashtags, isAmountValid, 'Хэш-тегов не должно быть больше 5');
-  pristine.addValidator(description, commentLength, 'Длина комментария не может составлять больше 140 символов');
+  pristine.addValidator(inputHashtags, isEveryHashtagSymbolsValid, 'Хэш-тег должен начинается с символа # и состоять из букв или чисел, без пробелов и спецсимволов. Максимальная длина одного хэш-тега 20 символов, включая решётку');
+  pristine.addValidator(inputHashtags, areHashtagsUnique, 'Хэш-теги не должны повторяться');
+  pristine.addValidator(inputHashtags, isAmountValid, 'Хэш-тегов не должно быть больше 5');
+  pristine.addValidator(inputComments, commentLength, 'Длина комментария не может составлять больше 140 символов');
 };
 formValidateCheck();
 //отправка формы
